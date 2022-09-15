@@ -14,8 +14,6 @@ class ApiSecurityConfig {
     @Bean
     public SecurityFilterChain securityChain(HttpSecurity httpSecurity) throws Exception {
 
-        httpSecurity.csrf().disable();
-
         httpSecurity.sessionManagement(it -> {
             it.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         });
