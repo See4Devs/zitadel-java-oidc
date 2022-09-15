@@ -1,0 +1,51 @@
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="~{fragments::head}">
+    <title>Account Console</title>
+  </head>
+  <body class="container">
+    <div th:replace="~{fragments::navbar2(current=index)}"></div>
+
+    <script defer>
+      async function pingServer() {
+        let response = await fetch("/webapp/api/pings/me", {
+          credentials: 'include',
+        });
+        let payload = await response.json();
+        document.querySelector("#response").innerText = payload.ping_echo;
+      }
+    </script>
+
+    <div class="d-flex justify-content-center">
+      <div class="card" style="width: 60vw; margin-top: 5%">
+        <div class="card-header text-center">Leaderboard</div>
+        <div class="jumbotron">
+          <div style="padding-left: 30%">
+            <strong>Granted Roles</strong>
+            <ol>
+              <li
+                th:each="role, iterator: ${grantedRoles}"
+                th:text="${role}"
+              ></li>
+            </ol>
+          </div>
+
+          <div style="padding-left: 30%">
+            <strong style="margin-bottom: 5%">Ping the Backend</strong>
+            <p class="lead">
+              <a
+                class="btn btn-danger btn-lg"
+                href="#"
+                role="button"
+                onclick="pingServer()"
+                >Ping Server</a
+              >
+            </p>
+          </div>
+          <div style="padding-left: 30%">
+            <p id="response" class=".alert-success"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
